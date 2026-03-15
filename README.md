@@ -4,6 +4,6 @@ Shell Scripting Practice Questions
 >Checkout EVAL1_Practice/complexQ/ to Practice :)
 
 > ------------------------------------------------------------------------
-> Midsem content uploading soon
+> Midsem content uploading soon   
 > Meanwhile to see all Pyq's , visite LabXam.vercel.app
 > 
