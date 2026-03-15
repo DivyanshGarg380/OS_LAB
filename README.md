@@ -5,5 +5,5 @@ Shell Scripting Practice Questions
 
 > ------------------------------------------------------------------------
 > Midsem content uploading soon   
-> Meanwhile to see all Pyq's , visite LabXam.vercel.app
+> Meanwhile to see all Pyq's , visite [LabXam](https://labxam.vercel.app)
 > 
