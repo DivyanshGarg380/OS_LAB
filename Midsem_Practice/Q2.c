@@ -43,5 +43,6 @@ int main() {
     pthread_mutex_init(&lock, NULL);
     for(int i = 0; i < 4; ++i) pthread_create(&t[i], NULL, func, NULL);
     for(int i = 0; i < 4; ++i) pthread_join(&t[i], NULL);
+    pthread_mutex_destroy(&lock);
     return 0;
 }

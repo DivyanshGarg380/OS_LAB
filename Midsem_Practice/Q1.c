@@ -46,7 +46,8 @@ int main() {
             break;
 
         case 0:
-            excel("./premPriority", "premPriority", NULL);
+            execl("./premPriority", "premPriority", NULL);
+            perror("exec failed");
             break;
 
         default:
