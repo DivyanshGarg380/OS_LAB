@@ -134,10 +134,9 @@ int main() {
     tq = p[0].id;
     n = p[1].id;
 
-    tq = p[n].id;
     sem = sem_open("/cpu", O_CREAT, 0644, 1);
     while(done < n) {
-        for(int i = 0; i < n; ++i) {
+        for(int i = 2; i < n + 2; ++i) {
             if(p[i].at <= time && p[i].rt > 0) {
                 pthread_t t;
                 int idx = i;
@@ -146,7 +145,7 @@ int main() {
             }
         }
         time++;
-    }
+    }   
 
     printf("\nID AT BT CT WT TAT\n");
     for (int i = 0; i < n; i++) {
