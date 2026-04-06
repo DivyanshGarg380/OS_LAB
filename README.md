@@ -11,3 +11,8 @@ Midsem Practice Questions
 
 > Midsem evaluations over and related content is uploaded under /Midsem_Practice      
 > Similar questions were asked across all batches :)
+
+ ------------------------------------------------------------------------
+Endsem Practice Questions
+> Endsem content uploading soon
+> Meanwhile to see all Pyq's , visite [LabXam](https://labxam.vercel.app)
