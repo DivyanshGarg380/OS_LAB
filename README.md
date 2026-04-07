@@ -7,7 +7,7 @@ Shell Scripting Practice Questions
 Midsem Practice Questions
 
 > Midsem content uploading soon   
-> Meanwhile to see all Pyq's , visite [LabXam](https://labxam.vercel.app)
+> Meanwhile to see all Pyq's , visit [LabXam](https://labxam.vercel.app)
 
 > Midsem evaluations over and related content is uploaded under /Midsem_Practice      
 > Similar questions were asked across all batches :)
@@ -15,4 +15,4 @@ Midsem Practice Questions
  ------------------------------------------------------------------------
 Endsem Practice Questions
 > Endsem content uploading soon    
-> Meanwhile to see all Pyq's , visite [LabXam](https://labxam.vercel.app)
+> Meanwhile to see all Pyq's , visit [LabXam](https://labxam.vercel.app)
