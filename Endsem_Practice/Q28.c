@@ -56,9 +56,9 @@ void sortBlocks() {
 }
 
 int isSafe(int safeSeq[]) {
-    int work[MAX], finish[MAX] = {0}, cnt = 0;
+    int work = 0, finish[MAX] = {0}, cnt = 0;
 
-    for(int i = 0; i < m; ++i) work[i] = block[i];
+    for(int i = 0; i < m; ++i) work += block[i];
 
     while(cnt < n) {
         int found = 0;
@@ -66,14 +66,11 @@ int isSafe(int safeSeq[]) {
             if(!finish[i]) {
                 int need = maxP[i] - alloc[i];
 
-                for(int j = 0; j < m; ++j) {
-                    if(work[j] >= need) {
-                        work[j] -= need;
-                        finish[i] = 1;
-                        safeSeq[cnt++] = i;
-                        found = 1;
-                        break;
-                    }
+                if(work >= need) {
+                    work += alloc[i];
+                    finish[i] = 1;
+                    safeSeq[cnt++] = i;
+                    found = 1;
                 }
             }
         }
@@ -122,6 +119,11 @@ int main() {
         scanf("%d", &req);
 
         printf("\nP%d request %d\n", pid, req);
+
+        if(req > (maxP[pid] - alloc[pid])) {
+            printf("Error: exceeds max need\n");
+            continue;
+        }
 
         sortBlocks();
 

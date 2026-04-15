@@ -1,0 +1,847 @@
+/* OS LAB Practice */
+
+---- Bankers Algo -----
+
+int main() {
+	int n, m;
+	// Enter number of processes -> scanf("%d", &n);
+	// Enter number of resources -> scanf("%d", &m);
+
+	int alloc[n][m], max[n][m] , need[n][m], avail[n][m];
+	
+	// Enter allocation matrix -> scanf("%d", &alloc[i][j]);
+	// Enter max matrix -> scanf("%d", &max[i][j]);
+	// Enter available matrix -> scanf("%d", &avail[i][j]);
+
+	// compute need matrix -> need[i][j] = max[i][j] - alloc[i][j];
+	
+	int finish[n], safeSeq[n], work[m];
+
+	// finish[i] = 0 -> loops till n
+	// work[i] = avail[i] -> loops till m
+
+	int cnt = 0;
+	while(cnt < n) {
+		int found = 0;
+		for(int i = 0; i < n; ++i) {
+			if(!finish[i]) {
+				int flag = 1;
+				for(int j = 0; j < m; ++j) {
+					if(need[i][j] > work[j]) // set flag = 0 and break
+				}
+				
+				if(flag) {
+					for(int j = 0; j < m; ++j) work[j] += alloc[i][j];
+					
+					safeSeq[cnt++] = i;
+					finish[i] = 1;
+					found = 1;
+				}
+			}
+		}
+
+		if(found == 0) // system not safe -> return 0
+		else // safe -> return 1
+					
+
+	}
+	// print safeSeq
+}
+
+
+----- Safety Algo ------
+ 
+-> Copy Paste bankers
+
+
+----- Resource Request Algo -----
+
+int main() {
+	int n, m;
+	// Enter number of processes -> scanf("%d", &n);
+	// Enter number of resources -> scanf("%d", &m);
+
+	int alloc[n][m], max[n][m] , need[n][m], avail[n][m];
+	
+	// Enter allocation matrix -> scanf("%d", &alloc[i][j]);
+	// Enter max matrix -> scanf("%d", &max[i][j]);
+	// Enter available matrix -> scanf("%d", &avail[i][j]);
+
+	// compute need matrix -> need[i][j] = max[i][j] - alloc[i][j];
+	
+	int pid;
+	// Enter process ID asking for request
+
+	int request[m];
+	// Enter Request vector -> scanf("%d", &req[i]);
+
+	// Check if Request <= Need -> if(req[i] <= need[pid][i])
+	// Else throw error -> Request exceeds need
+
+	// Check if Request <= Available -> if(req[i] <= available[i]) 
+	// Else throw error -> Resource not available
+
+	// Now Pretend allocation
+	for(int i = 0; i < m; ++i) {
+		avail[i] -= req[i];
+		alloc[pid][i] += req[i];
+		need[pid][i] -= req[i];
+	}
+
+	// Resource granted
+	// Check with banker's algo if this allocation is safe.
+	// If not then revert back the "allocation"
+	
+	for(int i = 0; i < m; ++i) {
+		avail[i] += req[i];
+		alloc[pid][i] -= req[i];
+		need[pid][i] += req[i];
+	}
+}
+
+	
+----- Deadlock Detection ------
+
+int main() {
+	int n, m;
+	// Enter number of processes -> scanf("%d", &n);
+	// Enter number of resources -> scanf("%d", &m);
+
+	int alloc[n][m], max[n][m] , need[n][m], avail[n][m];
+	
+	// Enter allocation matrix -> scanf("%d", &alloc[i][j]);
+	// Enter max matrix -> scanf("%d", &max[i][j]);
+	// Enter available matrix -> scanf("%d", &avail[i][j]);
+
+	// compute need matrix -> need[i][j] = max[i][j] - alloc[i][j];
+	
+	int finish[n];
+	// if allocation = 0 -> mark finish = 1;
+	for(int i = 0; i < n; ++i) {
+		int sum = 0;
+		for(int j = 0; j < m; ++j) sum += alloc[i][j];
+		if(sum == 0) finish[i] = 1;
+		else finish[i] = 0;
+	}
+
+	int work[m];
+	// Set work[i] = avail[i];
+
+	int found = 0;
+	
+	do {
+		found = 0;
+		for(int i = 0; i < n; ++i) {
+			if(!finish[i]) {
+				int flag = 1;
+				for(int j = 0; j < m; ++j) {
+					if(req[i][j] > work[j]) // Set flag = 0 and break
+				}
+	
+				if(flag) {
+					for(int j = 0; j < m; ++j) work[j] += alloc[i][j];
+
+					finish[i] = 1;
+					found = 1;
+				}
+			}
+		}
+	} while(found) 	
+
+	// check for deadlock now
+	int deadlock = 0;
+	for(int i = 0; i < n; ++i) {
+		if(!finish[i]) deadlock = 1; // Process i is in deadlock
+	}
+
+	if(!deadlock) // No deadlock
+}
+
+
+----- First, Next, Best, Worst Fit -----
+
+void firstFit(int block[], int m, int process[], int n){
+	int alloc[n];
+	// Set alloc[i] = -1 -> loop till n
+
+	for(int i = 0; i < n; ++i) {
+		for(int j = 0; j < m; ++j) {
+			if(block[j] >= process[i] {
+				alloc[i] = j;
+				block[j] -= process[i];
+				break;
+			}
+		}
+	}
+
+	 
+	// Now show what all have been allotted
+	for(int i = 0; i < n; ++i) {
+		if(alloc[i] != -1) // print what is allotted -> allocation[i];
+		else // Not allotted
+	}
+}
+
+void nextFit(int blocks[], int m, int process[], int n) {
+	int alloc[n];
+	// Set alloc[i] = -1 -> loop till n
+	int j = 0;
+
+	for(int i = 0; i < n; ++i) {
+		int cnt = 0;
+		while(cnt < m) {
+			if(block[j] >= process[i]) {
+				alloc[i] = j;
+				block[j] -= process[i];
+				break;
+			}
+			
+			cnt++;
+			j = (j + 1) % m;
+		}
+	}
+
+	// Now show what all have been allotted
+	for(int i = 0; i < n; ++i) {
+		if(alloc[i] != -1) // print what is allotted -> allocation[i];
+		else // Not allotted
+	}
+}
+
+void bestFit(int blocks[], int m, int process[], int n) {
+	int alloc[n];
+	// Set alloc[i] = -1 -> loop till n
+
+	for(int i = 0; i < n; ++i) {
+		int best = -1;
+		for(int j = 0; j < m; ++j) {
+			if(block[j] >= process[i]) {
+				if(best == -1 || block[j] < block[best]) best = j;
+
+			}
+		}
+
+		if(best != -1) { // allot
+			alloc[i] = best;
+			block[best] -= process[i];
+		}
+	}
+
+	// Now show what all have been allotted
+	for(int i = 0; i < n; ++i) {
+		if(alloc[i] != -1) // print what is allotted -> allocation[i];
+		else // Not allotted
+	}
+
+}
+
+void worstFit(int block[], int m, int process[], int n) {
+	int alloc[n];
+	// Set alloc[i] = -1 -> loop till n
+	
+	for(int i = 0; i < n; i++) {
+        	int worst = -1;
+
+        	for(int j = 0; j < m; j++) {
+            		if(blocks[j] >= processes[i]) {
+                		if(worst == -1 || blocks[j] > blocks[worst])
+                    			worst = j;
+            		}
+        	}
+
+        	if(worst != -1) {
+            		allocation[i] = worst;
+           		blocks[worst] -= processes[i];
+        	}
+    	}
+
+	// Now show what all have been allotted
+	for(int i = 0; i < n; ++i) {
+		if(alloc[i] != -1) // print what is allotted -> allocation[i];
+		else // Not allotted
+	}
+}
+
+
+int main() {
+	int n, m;
+	// Enter number of memory block -> scanf("%d", &m);
+	// Enter number of processes 	-> scanf("%d" , &n);
+
+	int blocks[m], process[n];
+	// Enter block size -> scanf("%d", &blocks[i]);
+	// Enter process size -> scanf("%d", &process[i]);
+
+	// Now call all functions :)
+}
+
+
+----- Page Replacements (FIFO, Optimal, LRU, MRU, LFU, MFU) --------
+
+#define MAX 40
+
+void fifo(int pages[], int n, int capacity) {
+	int frames[MAX], front = 0, faults = 0;
+
+	// Set frames[i] = -1 -> loop till capacity
+	
+	for(int i = 0; i < n; ++i) {
+		int found = 0;
+		for(int j = 0; j < capacity; ++j) {
+			if(frames[j] == pages[i] // set found = 1 and break
+
+		}
+		
+		if(!found) {	
+			frames[front] = pages[i];
+			front = (front + 1) % capacity;
+			faults++;
+		}
+	}
+
+	// print faults
+}
+
+// optimal from here -> 2 functions required
+int predict(int pages[], int frames[], int n, int idx, int capacity) {
+	int farthest = idx, pos = -1;
+	
+	for(int i = 0; i < capacity; ++i) {
+		int j;
+		for(j = idx; j < n; ++j) {
+			if(frames[i] == pages[j]) {
+				if(j > farthest) // set farthest = j and pos = i;					break;
+			}
+		}
+
+		if(j == n) return i;
+	}
+	return (pos == -1) ? 0 : pos;	
+}	
+
+void optimal(int pages[], in n, int capacity) {
+	int frames[MAX], faults = 0, size = 0;
+	// Set frames[i] = -1 for all capacity
+
+	for(int i = 0; i < n; ++i) {
+		int found = 0;
+		for(int j = 0; j < size; ++j) {
+			if(frames[j] == pages[i]) // set found = 1 and break
+
+		}
+
+		if(!found) {
+			if(size < capacity) frames[size++] = pages[i];
+			else {
+				int pos = predict(pages, frames, n, i + 1, capacity);
+				frames[pos] = pages[i];
+			}
+			faults++;
+		}
+	}
+	// print faults
+}
+
+void lru(int pages[], int n, int capacity) {
+	int frames[MAX], time[MAX], faults = 0, cnt = 0;
+	// Set frames[i] = -1 for all capacity
+
+	for(int i = 0; i < n; ++i) {
+		int found = 0;
+		for(int j = 0; j < capacity; ++j) {
+			if(frames[j] == pages[i]) {
+				time[j] == ++cnt;
+				found = 1;
+				break;
+			}
+		}
+
+		if(!found) {
+			int idx = 0;
+			for(int j = 1; j < capacity; ++j) {
+				if(time[j] < time[idx]) idx = j;
+			}
+			
+			frames[idx] = pages[i];
+			time[idx] = ++cnt;
+			faults++;
+		}
+	}
+
+	// print faults
+}
+
+void lfu(int pages[], int n, int capacity) {
+	int frames[MAX], freq[MAX], faults = 0;
+
+	//  Set frames[i] = -1 and freq[i] = 0 for all capacity
+	
+	for(int i = 0; i < n; ++i) {
+		int found = 0;
+		for(int j = 0; j < capacity; ++j) {
+			if(frames[j] == pages[i]) {
+				freq[j]++;
+				found = 1; break;
+			}
+		}
+
+		if(!found) {
+			int idx = 0;
+			for(int j = 1; j < capacity; ++j) {
+				if(freq[j] < freq[idx]) idx = j;
+			}
+
+			frames[idx] = pages[i];	
+			freq[idx] = 1;
+			faults++;
+		}
+	}
+
+	// printf faults
+}
+
+void mfu(int pages[], int n, int capacity) {} // same as LFU -> just flip condition freq[j] > freq[idx] 
+
+void mru(int pages[], int n, int capacity) {] // same as LRU -> just flip condition time[j] > time[idx]
+
+int main() {
+	int n, capacity;
+	int pages[n];
+	// Enter number of pages -> scanf("%d", &n);
+	// Enter frame capacity -> scanf("%d", &capacity);
+	// Enter pages -> scanf("%d", &pages[i]);
+
+	// call the functions now :)
+}
+
+------ Disk Scheduling (FCFS, SSTF, SCAN, C-SCAN, LOOK, C-LOOK) ----------
+
+
+#define MAX 100
+
+void fcfs(int req[], int n, int head) {
+	int total = 0;
+	for(int i = 0; i < n; ++i) {
+		total += abs(req[i] - head);
+		head = req[i];
+	}
+
+	// print total
+}
+
+void sstf(int req[], int n, int head) {
+	int visited[MAX] = {0};
+	int total = 0;
+
+	for(int i = 0; i < n; ++i) {
+		int mini = INT_MAX, idx = -1;
+		for(int j = 0; j < n; ++j) {
+			if(!visited[j]) {
+				int dist = abs(req[j] - head);
+				if(dist < mini) //  set mini = dist and idx = j;
+			}
+		}
+		total += mini;
+		head = req[idx];
+		visited[idx] = 1;
+	}
+
+	// print total
+}
+
+void scan(int req[], int n, int head, int size) {
+	int total;
+	sort(req, n) // apply bubble sort for simplicity
+
+	int i;
+	for(i = 0; i < n; ++i) if(req[i] >= head) break;
+	
+	// move right
+	for(int j = i; j < n; ++j) {
+		total += abs(req[j] - head);
+		head = req[j];
+	}
+
+	// move to end now
+	total += abs(head - size + 1);
+	head = size - 1;
+
+	// move left now
+	for(int j = i - 1; j >= 0; --j) {
+		total += abs(req[j] - head);
+		head = req[j];
+	}
+
+	// print total
+}
+
+void cscan(int req[], int n, int head, int size) {
+	int total = 0;
+	
+	sort(req, n);
+	int i;
+	for(int i = 0; i < n; ++i) if(req[i] >= head) break;
+
+	// move right
+	for(int j = i; j < n; ++j) {
+		total += abs(req[j] - head);
+		head = req[j];
+	}
+
+	// move to end
+	total += abs(head - size + 1);
+	// jump to 0 now
+	total += size - 1;
+	head = 0;
+
+	// move right again
+	for(int j = 0; j < i; ++j) {
+		total += abs(head - req[j]);
+		head = req[j];
+	}
+
+	// print total
+}
+
+void look(int req[], int n, int head) {
+	int total = 0;
+	sort(req, n);
+	int i;
+	for(i = 0; i < n; ++i) if(req[i] >= head) break;
+
+	// move right
+	for(int j = i; j < n; ++j) {
+		total += abs(head - req[j]);
+		head = req[j];
+	}
+
+	// reverse now
+	for(int j = i - 1; j >= 0; --j) {
+		total += abs(req[j] - head);
+		head = req[j];
+	}
+
+	// print total
+}
+
+void clook(int req[], int n, int head) {
+	int total = 0;
+	sort(req, n);
+	int i;
+	for(i = 0; i < n; ++i) if(req[i] >= head) break;
+
+	// move right
+	for(int j = i; j < n; ++j) {	
+		total += abs(req[j] - head);
+		head = req[j];
+	}
+
+	// jump to smallest req
+	if(i > 0) {
+		total += abs(head-req[0]);
+		head = req[0];
+	}
+	
+	// continue same direction
+	for(int j = 1; j < i; ++j) {
+		total += abs(head - req[j]);
+		head = req[j];
+	}
+
+	// print total
+}
+
+
+--------- Additional Algos which seem important -------------
+
+1) Additional Reference Byte Algorithm
+2) Second Chance (Clock Algorithm)
+3) Enhanced Second Chance (R, M Bits)
+
+#define MAX 50
+
+void additional_ref_byte(int pages[], int n, int capacity) {
+	int frames[MAX];
+	int refByte[MAX];
+	int faults = 0;
+
+	// Set frames[i] = -1 and refByte[i] = 0 for all capacity
+
+	for(int i = 0; i < n; ++i) {
+		// right shift all reference bytes
+		for(int j = 0; j < capacity; ++j) refByte[j] = refByte[j] >> 1;
+
+		int found = 0;
+		for(int j = 0; j < capacity; ++j) {
+			if(frames[j] == pages[i]) {
+				refByte[j] |= 128;
+				found = 1;
+				break;
+			}
+		}
+
+		if(!found) {
+			int mini = 0;
+			for(int j = 1; j < capacity; ++j) {
+				if(refByte[j] < refByte[mini]) mini = j;
+			} 
+
+			frames[mini] = pages[i];
+			faults++;
+			refByte[idx] |= 128;
+		}
+
+	}
+	
+	// print your faults
+}
+
+void second_chance(int pages[], int n, int capacity) {
+	int frames[MAX];
+	int ref[MAX];
+	int pointer = 0, faults = 0;
+	
+	// Set frames[i] = -1 and ref[i] = 0 for all capacity
+
+	for(int i = 0; i < n; ++i) {
+		int found = 0;
+		for(int j = 0; j < capacity; ++j) {
+			if(frames[j] == pages[i]) {
+				found = 1;
+				ref[j] = 1;
+				break;
+
+			}
+		}
+
+		if(!found) {
+			while(ref[pointer] == 1) { // find replacement using clock
+				ref[pointer] = 0;  // give second chance
+				pointer = (pointer + 1) % capacity;
+			}	
+
+			frames[pointer] = pages[i];
+			ref[pointer] = 1;
+			pointer = (pointer + 1) % capacity;
+			faults++;
+		}
+	}
+
+	// print faults
+}
+
+void enchanced_second_chance(int pages[], int n, int capacity) {
+	int frames[MAX];
+	int R[MAX];
+	int M[MAX];
+	int pointer = 0, faults= = 0;
+
+	// Set frames[i] = -1 and R[i] = 0 and M[i] = 0 for all capacity
+
+	for(int i = 0; i < n; ++i) {
+		int found = 0;
+		for(int j = 0; j < capacity; ++j) {
+			if(frames[j] == pages[i]) {
+				R[j] = 1;
+				found = 1; break;
+			}
+		}
+
+		if(!found) {
+			int pos = -1;
+			// find (0, 0)
+			for(int j = 0; j < capacity; ++j) {
+				int idx = (pointer + j) % capacity;
+				if(R[idx] == 0 && M[idx] == 0) // Set pos = idx and break
+
+			}
+
+			// find (0, 1)
+			if(pos == -1) {
+				for(int j = 0; j < capacity; ++j) {
+					int idx = (pointer + j) % capacity;
+					if(R[idx] == 0 && M[idx] == 1) // Set pos = idx and break
+
+				}
+			}
+
+			// if still not found -> reset R bits and repeat
+			if(pos == -1) {
+				for(int j = 0; j < capacity; ++j) R[j] = 0;
+				pos = pointer;
+			}
+	
+			// replace
+			frames[pos] = pages[i];
+			R[pos] = 1;
+			M[pos] = pages[i] % 2;
+			pointer = (pos + 1) % capacity;
+			faults++;
+		}
+	}
+	// print faults
+}
+
+-------- PYQ's TIME -------------
+
+/* CSE-A2 */
+
+#define MAX 50
+
+void printState(int frames[], int ref[], int capacity) {
+	printf("FRAMES: ");
+	for(int i = 0; i < capacity; ++i) {
+		if(frames[i] == -1) printf("[-] ");
+		else printf("[%d] ", frames[i]);
+	}
+
+	printf("REGISTERS: ");
+	for(int i = 0; i < capacity; ++i) {
+		// print 8 bit binary
+		for(int b = 7; b >= 0; --b) {
+			printf("%d", (ref[i] >> b) & 1);
+		}
+		printf(" ");
+	}
+	printf("\n");
+}
+
+
+void mru_ref_register(int pages[], int n, int capacity) {
+	int frames[MAX], ref[MAX];
+	int hits = 0, faults = 0;
+
+	// Set frames[i] = -1 and ref[i] = 0 for all capacity
+
+	for(int i = 0; i < n; ++i) {
+		// shift all right
+		for(int j = 0; j < capacity; ++j) ref[j] = ref[j] >> 1;
+
+		int found = 0;
+		for(int j = 0; j < capacity; ++j) {
+			if(frames[j] == pages[i]) {
+				ref[j] |= 128;	
+				hits++;
+				found = 1;
+				printf("\nPage %d -> HIT\n", pages[i]);
+                		printState(frames, ref, capacity);
+                		break;
+			}
+		}
+
+		if(!found) {
+			int idx = -1;
+			
+			// set for empty frame
+			for(int j = 0; j < capacity; ++j) {
+				if(frames[j] == -1) // set idx = j and break
+			}
+
+			// if no empty frame -> use MRU now
+			if(pos == -1) {	
+				int maxi = 0;
+				for(int j = 1; j < capacity; ++j) {
+					if(ref[j] > ref[idx]) idx = j;	
+				}
+				idx = maxi;
+			}
+
+			frames[idx] = pages[i];
+			ref[idx] |= 128;
+			faults++;
+			printf("\nPage %d -> FAULT\n", pages[i]);
+            		printState(frames, ref, capacity);
+		}
+	}
+
+	// print faults and hits
+}
+
+/* CSE-A1 */
+
+#define MAX 50
+
+void sort(int arr[], int n) {} // I hate C 😭😭.. C++ better
+
+void safety(int n, int alloc[], int max[], int total_free) {
+	int safeSeq[MAX], finish[n];
+	int count = 0;
+	
+	// Set finish[i] = 0 for all processes (n)
+	int work = total_free;
+	while(count < n) {
+		int found = 0;
+		for(int i = 0; i < n; ++i) {
+			int need = max[i] - alloc[i];
+			if(!finish[i] && need <= work) {
+				work += alloc[i];
+				safeSeq[count++] = i;
+				finish[i] = 1;
+				found = 1;
+			}
+		}
+
+		if(!found) break;
+	}
+
+	if(count == n) {
+		printf("Safe | Seq: ");
+		for(int i = 0; i < n; ++i) printf("%d ", safeSeq[i]);
+	} else {
+		printf("Not Safe");
+	}
+}
+
+int main() {
+    	int n, m;
+
+    	// Enter number of processes -> n
+	// Enter number of blocks -> m
+	
+	int blocks[m];
+	// Enter block sizes -> scanf("%d", &blocks[i]);
+
+	int max[n];
+	// Enter max requirement by each process -> scanf("%d", &max[i]);
+
+	int alloc[n];
+	// Set alloc[i] = 0;
+
+	while(1) {
+		int pid, req;
+		// Enter pid and if its -1 break
+		// Enter req 
+		// sort blocks sort(blocks, m);
+		// print blocks before
+		// apply best fit
+
+		int pos = -1;
+		for(int i = 0; i < m; ++i) {
+			if(blocks[i] >= req) {
+				pos = i; break;
+			}
+		}
+
+		if(pos == -1) // Cant allocate -> continue to next iteration
+
+		blocks[pos] -= req;
+		alloc[pid] += req;
+	
+		// print blocks after updation
+		
+		int total = 0;
+		// compute total free memory
+		for(int i = 0; i < m; ++i) total += blocks[i];
+
+		// check safety
+		if(!safety(n, alloc, max, total)) {
+			block[pos] += req;
+			alloc[pid] -= req;
+		}
+	}
+
+	// print final allocation -> print alloc array
+}
+
+
+		
