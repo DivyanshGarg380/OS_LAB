@@ -7,11 +7,11 @@ int main() {
 	// Enter number of processes -> scanf("%d", &n);
 	// Enter number of resources -> scanf("%d", &m);
 
-	int alloc[n][m], max[n][m] , need[n][m], avail[n][m];
+	int alloc[n][m], max[n][m] , need[n][m], avail[m];
 	
 	// Enter allocation matrix -> scanf("%d", &alloc[i][j]);
 	// Enter max matrix -> scanf("%d", &max[i][j]);
-	// Enter available matrix -> scanf("%d", &avail[i][j]);
+	// Enter available vector -> scanf("%d", &avail[i]);
 
 	// compute need matrix -> need[i][j] = max[i][j] - alloc[i][j];
 	
@@ -29,10 +29,9 @@ int main() {
 				for(int j = 0; j < m; ++j) {
 					if(need[i][j] > work[j]) // set flag = 0 and break
 				}
-				
+
 				if(flag) {
 					for(int j = 0; j < m; ++j) work[j] += alloc[i][j];
-					
 					safeSeq[cnt++] = i;
 					finish[i] = 1;
 					found = 1;
@@ -41,11 +40,9 @@ int main() {
 		}
 
 		if(found == 0) // system not safe -> return 0
-		else // safe -> return 1
-					
-
 	}
 	// print safeSeq
+	return 1;
 }
 
 
@@ -61,11 +58,11 @@ int main() {
 	// Enter number of processes -> scanf("%d", &n);
 	// Enter number of resources -> scanf("%d", &m);
 
-	int alloc[n][m], max[n][m] , need[n][m], avail[n][m];
+	int alloc[n][m], max[n][m] , need[n][m], avail[m];
 	
 	// Enter allocation matrix -> scanf("%d", &alloc[i][j]);
 	// Enter max matrix -> scanf("%d", &max[i][j]);
-	// Enter available matrix -> scanf("%d", &avail[i][j]);
+	// Enter available vector -> scanf("%d", &avail[i]);
 
 	// compute need matrix -> need[i][j] = max[i][j] - alloc[i][j];
 	
@@ -107,11 +104,11 @@ int main() {
 	// Enter number of processes -> scanf("%d", &n);
 	// Enter number of resources -> scanf("%d", &m);
 
-	int alloc[n][m], max[n][m] , need[n][m], avail[n][m];
+	int alloc[n][m], avail[m], request[n][m];
 	
 	// Enter allocation matrix -> scanf("%d", &alloc[i][j]);
-	// Enter max matrix -> scanf("%d", &max[i][j]);
-	// Enter available matrix -> scanf("%d", &avail[i][j]);
+	// Enter request matrix -> scanf("%d", &req[i][j]);
+	// Enter available vector -> scanf("%d", &avail[i]);
 
 	// compute need matrix -> need[i][j] = max[i][j] - alloc[i][j];
 	
@@ -140,13 +137,12 @@ int main() {
 	
 				if(flag) {
 					for(int j = 0; j < m; ++j) work[j] += alloc[i][j];
-
 					finish[i] = 1;
 					found = 1;
 				}
 			}
 		}
-	} while(found) 	
+	} while(found);
 
 	// check for deadlock now
 	int deadlock = 0;
