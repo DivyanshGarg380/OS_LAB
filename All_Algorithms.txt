@@ -162,7 +162,7 @@ void firstFit(int block[], int m, int process[], int n){
 
 	for(int i = 0; i < n; ++i) {
 		for(int j = 0; j < m; ++j) {
-			if(block[j] >= process[i] {
+			if(block[j] >= process[i]) {
 				alloc[i] = j;
 				block[j] -= process[i];
 				break;
@@ -186,12 +186,12 @@ void nextFit(int blocks[], int m, int process[], int n) {
 	for(int i = 0; i < n; ++i) {
 		int cnt = 0;
 		while(cnt < m) {
-			if(block[j] >= process[i]) {
+			if(blocks[j] >= process[i]) {
 				alloc[i] = j;
-				block[j] -= process[i];
+				blocks[j] -= process[i];
+				j = (j + 1) % m;
 				break;
 			}
-			
 			cnt++;
 			j = (j + 1) % m;
 		}
@@ -211,15 +211,15 @@ void bestFit(int blocks[], int m, int process[], int n) {
 	for(int i = 0; i < n; ++i) {
 		int best = -1;
 		for(int j = 0; j < m; ++j) {
-			if(block[j] >= process[i]) {
-				if(best == -1 || block[j] < block[best]) best = j;
+			if(blocks[j] >= process[i]) {
+				if(best == -1 || blocks[j] < blocks[best]) best = j;
 
 			}
 		}
 
 		if(best != -1) { // allot
 			alloc[i] = best;
-			block[best] -= process[i];
+			blocks[best] -= process[i];
 		}
 	}
 
@@ -239,15 +239,14 @@ void worstFit(int block[], int m, int process[], int n) {
         	int worst = -1;
 
         	for(int j = 0; j < m; j++) {
-            		if(blocks[j] >= processes[i]) {
-                		if(worst == -1 || blocks[j] > blocks[worst])
-                    			worst = j;
+            		if(blocks[j] >= process[i]) {
+                		if(worst == -1 || blocks[j] > blocks[worst]) worst = j;
             		}
         	}
 
         	if(worst != -1) {
-            		allocation[i] = worst;
-           		blocks[worst] -= processes[i];
+            		alloc[i] = worst;
+           		blocks[worst] -= process[i];
         	}
     	}
 
@@ -257,20 +256,6 @@ void worstFit(int block[], int m, int process[], int n) {
 		else // Not allotted
 	}
 }
-
-
-int main() {
-	int n, m;
-	// Enter number of memory block -> scanf("%d", &m);
-	// Enter number of processes 	-> scanf("%d" , &n);
-
-	int blocks[m], process[n];
-	// Enter block size -> scanf("%d", &blocks[i]);
-	// Enter process size -> scanf("%d", &process[i]);
-
-	// Now call all functions :)
-}
-
 
 ----- Page Replacements (FIFO, Optimal, LRU, MRU, LFU, MFU) --------
 
