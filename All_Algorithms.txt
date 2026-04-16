@@ -432,7 +432,7 @@ void scan(int req[], int n, int head, int size) {
 	}
 
 	// move to end now
-	total += abs(head - size + 1);
+	total += abs(head - (size - 1));
 	head = size - 1;
 
 	// move left now
@@ -449,7 +449,7 @@ void cscan(int req[], int n, int head, int size) {
 	
 	sort(req, n);
 	int i;
-	for(int i = 0; i < n; ++i) if(req[i] >= head) break;
+	for(i = 0; i < n; ++i) if(req[i] >= head) break;
 
 	// move right
 	for(int j = i; j < n; ++j) {
@@ -458,7 +458,9 @@ void cscan(int req[], int n, int head, int size) {
 	}
 
 	// move to end
-	total += abs(head - size + 1);
+	total += abs(head - (size - 1));
+	head = size - 1;
+
 	// jump to 0 now
 	total += size - 1;
 	head = 0;
@@ -550,18 +552,25 @@ void additional_ref_byte(int pages[], int n, int capacity) {
 		}
 
 		if(!found) {
-			int mini = 0;
-			for(int j = 1; j < capacity; ++j) {
-				if(refByte[j] < refByte[mini]) mini = j;
-			} 
+			int idx = -1;
 
-			frames[mini] = pages[i];
-			faults++;
-			refByte[idx] |= 128;
+            		// check empty frame
+            		for(int j = 0; j < capacity; j++) {
+                		if(frames[j] == -1) { idx = j; break; }
+            		}
+
+            		// if no empty frame -> replace min refByte
+            		if(idx == -1) {
+                		idx = 0;
+                		for(int j = 1; j < capacity; ++j) {
+                    			if(refByte[j] < refByte[idx]) idx = j;
+                		}
+            		}
+            		frames[idx] = pages[i];
+            		refByte[idx] |= 128;
+            		faults++;
 		}
-
 	}
-	
 	// print your faults
 }
 
@@ -584,15 +593,32 @@ void second_chance(int pages[], int n, int capacity) {
 		}
 
 		if(!found) {
-			while(ref[pointer] == 1) { // find replacement using clock
-				ref[pointer] = 0;  // give second chance
-				pointer = (pointer + 1) % capacity;
-			}	
 
-			frames[pointer] = pages[i];
-			ref[pointer] = 1;
-			pointer = (pointer + 1) % capacity;
-			faults++;
+			int flag = 0;
+			
+			// check for empty frame
+			for(int j = 0; j < capacity; ++j) {
+				if(frames[j] == -1) {
+					frames[j] = pages[i];
+					ref[j] = 1;
+					faults++;
+					flag = 1;
+					break;
+				}
+			}
+			
+			// if no place empty
+			if(!flag) {
+				while(ref[pointer] == 1) { // find replacement using clock
+					ref[pointer] = 0;  // give second chance
+					pointer = (pointer + 1) % capacity;
+				}	
+
+				frames[pointer] = pages[i];
+				ref[pointer] = 1;
+				pointer = (pointer + 1) % capacity;
+				faults++;
+			}
 		}
 	}
 
@@ -603,7 +629,7 @@ void enchanced_second_chance(int pages[], int n, int capacity) {
 	int frames[MAX];
 	int R[MAX];
 	int M[MAX];
-	int pointer = 0, faults= = 0;
+	int pointer = 0, faults = 0;
 
 	// Set frames[i] = -1 and R[i] = 0 and M[i] = 0 for all capacity
 
@@ -617,6 +643,9 @@ void enchanced_second_chance(int pages[], int n, int capacity) {
 		}
 
 		if(!found) {
+			
+			// check for empty frame else go to below step
+
 			int pos = -1;
 			// find (0, 0)
 			for(int j = 0; j < capacity; ++j) {
@@ -707,10 +736,10 @@ void mru_ref_register(int pages[], int n, int capacity) {
 			}
 
 			// if no empty frame -> use MRU now
-			if(pos == -1) {	
+			if(idx == -1) {	
 				int maxi = 0;
 				for(int j = 1; j < capacity; ++j) {
-					if(ref[j] > ref[idx]) idx = j;	
+					if(ref[j] > ref[maxi]) maxi = j;	
 				}
 				idx = maxi;
 			}
@@ -811,6 +840,7 @@ int main() {
 
 	// print final allocation -> print alloc array
 }
+
 
 
 		
