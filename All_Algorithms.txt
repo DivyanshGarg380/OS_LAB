@@ -308,7 +308,6 @@ void optimal(int pages[], in n, int capacity) {
 		int found = 0;
 		for(int j = 0; j < size; ++j) {
 			if(frames[j] == pages[i]) // set found = 1 and break
-
 		}
 
 		if(!found) {
@@ -331,7 +330,7 @@ void lru(int pages[], int n, int capacity) {
 		int found = 0;
 		for(int j = 0; j < capacity; ++j) {
 			if(frames[j] == pages[i]) {
-				time[j] == ++cnt;
+				time[j] = ++cnt;
 				found = 1;
 				break;
 			}
@@ -342,7 +341,6 @@ void lru(int pages[], int n, int capacity) {
 			for(int j = 1; j < capacity; ++j) {
 				if(time[j] < time[idx]) idx = j;
 			}
-			
 			frames[idx] = pages[i];
 			time[idx] = ++cnt;
 			faults++;
@@ -383,17 +381,7 @@ void lfu(int pages[], int n, int capacity) {
 
 void mfu(int pages[], int n, int capacity) {} // same as LFU -> just flip condition freq[j] > freq[idx] 
 
-void mru(int pages[], int n, int capacity) {] // same as LRU -> just flip condition time[j] > time[idx]
-
-int main() {
-	int n, capacity;
-	int pages[n];
-	// Enter number of pages -> scanf("%d", &n);
-	// Enter frame capacity -> scanf("%d", &capacity);
-	// Enter pages -> scanf("%d", &pages[i]);
-
-	// call the functions now :)
-}
+void mru(int pages[], int n, int capacity) {} // same as LRU -> just flip condition time[j] > time[idx]
 
 ------ Disk Scheduling (FCFS, SSTF, SCAN, C-SCAN, LOOK, C-LOOK) ----------
 
