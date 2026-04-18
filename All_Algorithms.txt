@@ -841,6 +841,4 @@ int main() {
 	// print final allocation -> print alloc array
 }
 
-
-
 		

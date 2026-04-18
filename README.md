@@ -16,3 +16,8 @@ Midsem Practice Questions
 Endsem Practice Questions
 > Endsem content uploading soon    
 > Meanwhile to see all Pyq's , visit [LabXam](https://labxam.vercel.app)
+
+> Endsem's Over and /Endsem_Practice had the same Questions appearing in the exam
+
+
+## Ciao 
